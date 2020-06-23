@@ -1,0 +1,60 @@
+;---------------------------------------------------------------------------------------------
+;sort the random point (which should all be in one surface) to clockwise or anti-clockwise, the angle and cross product
+;may occur some mistake for highly symmetrical structure like square
+function polyseq,trb
+   n=n_elements(trb(0,*))
+   x0=mean(trb(0,*))
+   y0=mean(trb(1,*))
+   z0=mean(trb(2,*))
+   vec=fltarr(3,n)
+   vec(0,*)=trb(0,*)-x0
+   vec(1,*)=trb(1,*)-y0
+   vec(2,*)=trb(2,*)-z0
+   angle=fltarr(1,n)
+   angle(0)=0.000
+   flag=0  
+     for i=1,n-1 do begin
+      cita=cal_angle(vec(0:2,0),vec(0:2,i))
+       if (cita gt 3.13 or cita lt 0.01) then continue ;prevent csp=0
+      csp0=crossp(vec(0:2,0),vec(0:2,i))
+      flag=1  
+     endfor
+
+;sort the random point (which should all be in one surface) to clockwise or anti-clockwise      
+     for i=1,n-1 do begin
+       if flag eq 0 then break
+       tangle=cal_angle(vec(0:2,0),vec(0:2,i))
+       tempcsp=crossp(vec(0:2,0),vec(0:2,i))
+       judge1=total(csp0*tempcsp)
+       if judge1 le 0.00001 then angle(i)=2*!pi-tangle else angle(i)=tangle 
+     end
+   w=sort(angle(*))
+   ;seq=trb(*,w)
+   
+   return,w
+end
+
+;------------------------------------------
+function hex_len,trb=trb,seq=seq
+    seq=polyseq(trb)
+    result=fltarr(15)
+    result(0)=norm(trb(0:2,seq(1))-trb(0:2,seq(0)))
+    result(1)=norm(trb(0:2,seq(2))-trb(0:2,seq(1)))
+    result(2)=norm(trb(0:2,seq(3))-trb(0:2,seq(2)))
+    result(3)=norm(trb(0:2,seq(4))-trb(0:2,seq(3)))
+    result(4)=norm(trb(0:2,seq(5))-trb(0:2,seq(4)))
+    result(5)=norm(trb(0:2,seq(0))-trb(0:2,seq(5)))
+   ;---------------diagonal line--------------- 
+    result(6)=norm(trb(0:2,seq(0))-trb(0:2,seq(2)))
+    result(7)=norm(trb(0:2,seq(3))-trb(0:2,seq(5)))
+    result(8)=norm(trb(0:2,seq(0))-trb(0:2,seq(4)))
+    result(9)=norm(trb(0:2,seq(1))-trb(0:2,seq(3)))
+    result(10)=norm(trb(0:2,seq(1))-trb(0:2,seq(5)))
+    result(11)=norm(trb(0:2,seq(2))-trb(0:2,seq(4)))
+   
+    result(12) = norm(trb(0:2,seq(0))-trb(0:2,seq(3)))
+    result(13) = norm(trb(0:2,seq(1))-trb(0:2,seq(4)))
+    result(14) = norm(trb(0:2,seq(2))-trb(0:2,seq(5)))
+    return,result
+end
+   
