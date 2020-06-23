@@ -10,7 +10,7 @@ The IDL codes consist of two sources:
 
 - *Eric Weeks's Particle Tracking and Anylysis Codes (http://www.physics.emory.edu/faculty/weeks//idl/)*
 
-Particle tracking part has been realized by `trackpy`[http://soft-matter.github.io/trackpy/v0.4.2/], so i would focus on the analysis codes, like various correlations functions, as well as the I/O API for typical IDL file types like `.gdf`
+Particle tracking part has been realized by [trackpy](http://soft-matter.github.io/trackpy/v0.4.2/), so i would focus on the analysis codes, like various correlations functions, as well as the I/O API for typical IDL file types like `.gdf`
 
 - *My own IDL untility codes, which were generated when i was doing researches at Peng's Lab.*
 
