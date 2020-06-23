@@ -1,0 +1,66 @@
+p1=read_gdf('F://crystalptdata//p_cluster_20120308_b_t_20.gdf')
+s1=read_gdf('F://crystalptdata//size_cluster_20120308_b_t_20.gdf')
+b001=read_gdf('F://crystalptdata//boo3davgt_20120308_b_t.gdf')
+wa=where(b001(15,*) eq 20)
+b0a=b001(*,wa)
+ta=read_gdf('F://crystalptdata//tetra_p_20120308_b_t.gdf')
+waa=where(ta(6,*) eq 20)
+ta=ta(*,waa)
+w01=where(s1(0,*) gt 100)
+pwa=total(p1(*,w01),2)
+b0a=symmetry(b0a)
+na=n_elements(b0a(0,*))
+ptsa=fltarr(7,na)+1.0
+ptsa(0:2,*)=b0a(0:2,*)
+ww=where(pwa gt 0 and pwa le 10 and b0a(5,*) le 0.25)
+ptsa(3,ww)=1.0
+ptsa(4,ww)=255.0/255.0
+ptsa(5,ww)=165.0/255.0
+ptsa(6,ww)=0.0/255.0
+ww1=where(pwa gt 10)
+ptsa(3,ww1)=1.75
+ptsa(4,ww1)=139.0/255.0
+ptsa(5,ww1)=69.0/255.0
+ptsa(6,ww1)=0.0/255.0
+ww2=where(pwa gt 0 and pwa le 10 and b0a(5,*) gt 0.25 and b0a(13,*) eq 1,n11)
+if n11 gt 0 then begin
+ptsa(3,ww2)=1.75
+ptsa(4,ww2)=255.0/255.0
+ptsa(5,ww2)=0.0/255.0
+ptsa(6,ww2)=0.0/255.0
+endif
+ww3=where(pwa gt 0 and pwa le 10 and b0a(5,*) gt 0.25 and b0a(13,*) eq 2, n22)
+if n22 gt 0 then begin
+ptsa(3,ww3)=1.75
+ptsa(4,ww3)=160.0/255.0
+ptsa(5,ww3)=32.0/255.0
+ptsa(6,ww3)=240.0/255.0
+endif
+ww4=where(pwa gt 0 and pwa le 10 and b0a(5,*) gt 0.25 and b0a(13,*) eq 3,n33)
+if n33 gt 0 then begin
+ptsa(3,ww4)=1.75
+ptsa(4,ww4)=0.0/255.0
+ptsa(5,ww4)=139.0/255.0
+ptsa(6,ww4)=139.0/255.0
+endif
+ww5=where(pwa eq 0)
+ptsa(3,ww5)=0.0
+ptsa(4,ww5)=0.0/255.0
+ptsa(5,ww5)=0.0/255.0
+ptsa(6,ww5)=255.0/255.0
+ww6=where(pwa gt 10 and b0a(5,*) gt 0.25 and b0a(13,*) gt 0,n44)
+if n44 gt 0 then begin
+ptsa(3,ww6)=1.75
+ptsa(4,ww6)=0.0/255.0
+ptsa(5,ww6)=0.0/255.0
+ptsa(6,ww6)=255.0/255.0
+endif
+ww7=where(pwa gt 0 and b0a(5,*) gt 0.25 and b0a(13,*) eq 0,n44)
+if n44 gt 0 then begin
+ptsa(3,ww7)=0.0
+ptsa(4,ww7)=255.0/255.0
+ptsa(5,ww7)=255.0/255.0
+ptsa(6,ww7)=255.0/255.0
+endif
+write_gdf,ptsa,'D://data//pts_10.gdf'
+end

@@ -1,0 +1,14 @@
+function trposition,trb
+l=max(trb(6,*))
+position01=Findgen(4,l+1)
+For j=0,l do begin
+w=where(trb(6,*) eq j)
+position01(0,j)=mean(trb(0,w))
+position01(1,j)=mean(trb(1,w))
+Endfor
+a001=fltarr(l+1)
+a002=findgen(l+1)
+position01(2,*)=a001
+position01(3,*)=a002
+return,position01
+end

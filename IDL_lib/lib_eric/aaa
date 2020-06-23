@@ -1,0 +1,22 @@
+evs01=readtext('evs_armorphous02_series002_1.dat')
+evc01=readtext('evc_armorphous02_series002_1.dat')
+pos01=readtext('pos_armorphous02_series002_1.dat')
+a1=indgen(2000,/string)
+dtr01=findgen(2000,64)
+dlo01=findgen(2000,64)
+for j=0,1999 do begin
+vecprj4,evc01(*,j),pos01,tr,lo,qtr,qlo,bins=128
+a2='tr_armorphous02_series002_'+a1[j]+'.dat'
+b2='lo_armorphous02_series002_'+a1[j]+'.dat'
+write_text,tr,a2
+write_text,lo,b2
+dtr02=qtr(1,0:63)
+dlo02=qlo(1,0:63)
+dtr01(j,*)=dtr02
+dlo01(j,*)=dlo02
+endfor
+str=transpose(dtr01)
+slo=transpose(dlo01)
+write_text,str,'jtr_armorphous02_series002_1.dat'
+write_text,slo,'jlo_armorphous02_series002_1.dat'
+end

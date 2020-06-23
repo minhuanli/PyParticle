@@ -1,0 +1,30 @@
+pro sqw,evc,evs,pos,f1,f01,f2,f02,s1,s01,s2,s02
+n1=n_elements(evs)
+a1=findgen(64,n1)
+a01=findgen(64,n1)
+a2=findgen(64,n1)
+a02=findgen(64,n1)
+b1=findgen(64,n1)
+b01=findgen(64,n1)
+b2=findgen(64,n1)
+b02=findgen(64,n1)
+for j=0,n1-1 do begin
+vecprj2,evc(*,j),pos,ftr,flo,str,slo,fqtr,fqlo,sqtr,sqlo,bins=128
+a1(*,j)=fqtr(1,1:64)
+a01(*,j)=fqtr(2,1:64)
+a2(*,j)=fqlo(1,1:64)
+a02(*,j)=fqlo(2,1:64)
+b1(*,j)=sqtr(1,1:64)
+b01(*,j)=sqtr(2,1:64)
+b2(*,j)=sqlo(1,1:64)
+b02(*,j)=sqlo(2,1:64)
+endfor
+f1=a1
+f01=a01
+f2=a2
+f02=a02
+s1=b1
+s01=b01
+s2=b2
+s02=b02
+end

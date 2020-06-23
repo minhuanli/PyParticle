@@ -1,0 +1,21 @@
+pro booanimate,data,a01,a02,a03,z1=z1,z2=z2
+;f1=findfile('F://crystalptdata//boo3davgt_20120308*')
+;a1=read_gdf(f1[3])
+a2=eclip(data,[2,z1,z2])
+ta=indgen(40)
+a01=fltarr(500,500,40)
+a02=fltarr(500,500,40)
+a03=fltarr(500,500,40)
+for j=0,39 do begin
+print,j
+w=where(a2(15,*) eq ta[j])
+g01=griddata(a2(0,w),a2(1,w),a2(3,w),dimension=500)
+g02=griddata(a2(0,w),a2(1,w),a2(5,w),dimension=500)
+a3=a2(*,w)
+w1=where(a3(14,*) gt 11)
+g03=griddata(a3(0,w1),a3(1,w1),a3(14,w1),dimension=500)
+a01(*,*,j)=(g01-min(g01))*255.0/(max(g01)-min(g01))
+a02(*,*,j)=(g02-min(g02))*255.0/(max(g02)-min(g02))
+a03(*,*,j)=(g03-min(g03))*255.0/(max(g03)-min(g03))
+endfor
+end

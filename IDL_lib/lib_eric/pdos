@@ -1,0 +1,12 @@
+function pdos,dcm,pos
+s=size(dcm)
+s1=s1[2]/2
+a=findgen(s1)
+for j=0,s1-1 do begin
+a0=mean(dcm(2*j,*))+mean(dcm(2*j+1,*))
+a[j]=a0
+endfor
+grid1=griddata(pos(0,*),pos(1,*),a,dimension=512)
+tvscl,grid1
+return,grid1
+end
